@@ -1,0 +1,14 @@
+antisamy-markup-formatter
+credentials-binding
+timestamper
+ws-cleanup
+workflow-aggregator
+git
+ssh-slaves
+matrix-auth
+pam-auth
+ldap
+email-ext
+mailer
+cloudbees-folder
+locale
