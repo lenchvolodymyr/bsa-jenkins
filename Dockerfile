@@ -2,16 +2,18 @@ FROM jenkins/jenkins:lts
 USER root
 
 RUN apt-get update && \
+      apt-get -y install sudo
+RUN curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+RUN apt-get update && \
     apt-get -y install apt-transport-https \
       ca-certificates \
-      curl \
-      git-all
+      git-all \
+      nodejs
 
 #Update the username and password
 ENV JENKINS_USER admin
 ENV JENKINS_PASS admin
-
-ENV JENKINS_URL 'http://localhost:8080/'
+ENV GITHUB_TOKEN ''
 
 # install jenkins plugins
 COPY ./jenkins-plugins /usr/share/jenkins/plugins

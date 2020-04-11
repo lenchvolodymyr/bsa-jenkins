@@ -1,5 +1,6 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <project>
+  <actions/>
   <description></description>
   <keepDependencies>false</keepDependencies>
   <properties>
@@ -30,14 +31,13 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>echo &quot;USER_REPOSITORY: $USER_REPOSITORY&quot;
-
-    echo &quot;TESTS_REPOSITORY: $TESTS_REPOSITORY&quot;
-    git clone $USER_REPOSITORY temp
-    ls
-    cd temp
-    ls
-  </command>
+      <command>RANDOM_NAME=$(cat /dev/urandom | tr -dc &apos;a-zA-Z0-9&apos; | fold -w 32 | head -n 1)
+mkdir $RANDOM_NAME &amp;&amp; cd $RANDOM_NAME
+git clone $TESTS_REPOSITORY tests &amp;&amp; cd tests
+./test.sh $USER_REPOSITORY ru
+cat ./result.txt
+cd $WORKSPACE
+rm -rf $RANDOM_NAME</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers/>
