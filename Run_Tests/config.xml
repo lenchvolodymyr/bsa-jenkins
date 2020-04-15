@@ -36,6 +36,13 @@
         </org.jenkinsci.plugins.gwt.GenericVariable>
         <org.jenkinsci.plugins.gwt.GenericVariable>
           <expressionType>JSONPath</expressionType>
+          <key>token</key>
+          <value>$.token</value>
+          <regexpFilter></regexpFilter>
+          <defaultValue></defaultValue>
+        </org.jenkinsci.plugins.gwt.GenericVariable>
+        <org.jenkinsci.plugins.gwt.GenericVariable>
+          <expressionType>JSONPath</expressionType>
           <key>language</key>
           <value>$.language</value>
           <regexpFilter></regexpFilter>
@@ -47,19 +54,19 @@
       <printPostContent>false</printPostContent>
       <printContributedVariables>true</printContributedVariables>
       <causeString>Generic Cause</causeString>
-      <token>token_test</token>
+      <token></token>
       <silentResponse>false</silentResponse>
       <overrideQuietPeriod>false</overrideQuietPeriod>
     </org.jenkinsci.plugins.gwt.GenericTrigger>
   </triggers>
-  <concurrentBuild>false</concurrentBuild>
+  <concurrentBuild>true</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
       <command>RANDOM_NAME=$(cat /dev/urandom | tr -dc &apos;a-zA-Z0-9&apos; | fold -w 32 | head -n 1)
 mkdir $RANDOM_NAME &amp;&amp; cd $RANDOM_NAME
 git clone $testRepository tests &amp;&amp; cd tests
-./test.sh $userRepository $language
-cat ./result.txt
+./test.sh $userRepository $token $userHometaskId $language
+cat ./result.json
 cd $WORKSPACE
 rm -rf $RANDOM_NAME</command>
     </hudson.tasks.Shell>
