@@ -36,6 +36,13 @@
         </org.jenkinsci.plugins.gwt.GenericVariable>
         <org.jenkinsci.plugins.gwt.GenericVariable>
           <expressionType>JSONPath</expressionType>
+          <key>endpoint</key>
+          <value>$.endpoint</value>
+          <regexpFilter></regexpFilter>
+          <defaultValue></defaultValue>
+        </org.jenkinsci.plugins.gwt.GenericVariable>
+        <org.jenkinsci.plugins.gwt.GenericVariable>
+          <expressionType>JSONPath</expressionType>
           <key>token</key>
           <value>$.token</value>
           <regexpFilter></regexpFilter>
@@ -66,7 +73,7 @@
 mkdir $RANDOM_NAME &amp;&amp; cd $RANDOM_NAME
 git clone $testRepository tests &amp;&amp; cd tests
 ./test.sh $userRepository $token $userHometaskId $language
-cat ./result.json
+curl -X POST -H &quot;Content-Type: application/json&quot; -d @./result.json $endpoint
 cd $WORKSPACE
 rm -rf $RANDOM_NAME</command>
     </hudson.tasks.Shell>
