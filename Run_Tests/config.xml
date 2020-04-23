@@ -71,11 +71,9 @@
     <hudson.tasks.Shell>
       <command>RANDOM_NAME=$(cat /dev/urandom | tr -dc &apos;a-zA-Z0-9&apos; | fold -w 32 | head -n 1)
 mkdir $RANDOM_NAME &amp;&amp; cd $RANDOM_NAME
-git clone $testRepository tests &amp;&amp; cd tests
-./test.sh $userRepository $token $userHometaskId $language
-curl -X POST -H &quot;Content-Type: application/json&quot; -d @./result.json $endpoint
-cd $WORKSPACE
-rm -rf $RANDOM_NAME</command>
+git clone $testRepository tests &amp;&amp; cd tests &amp;&amp; chmod +x ./test.sh
+./test.sh $userRepository $token $userHometaskId $language &amp;&amp; curl -X POST $endpoint -d @result.json --header &quot;Content-Type: application/json&quot;
+cd $WORKSPACE &amp;&amp; rm -rf $RANDOM_NAME</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers/>
