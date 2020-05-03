@@ -37,6 +37,15 @@ RUN apt-get update && apt-get -y upgrade && apt-get -y dist-upgrade && \
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
+# Install Gradle
+RUN wget -q https://services.gradle.org/distributions/gradle-6.2.1-bin.zip \
+    && unzip gradle-6.2.1-bin.zip -d /opt \
+    && rm gradle-6.2.1-bin.zip
+
+# Set Gradle in the environment variables
+ENV GRADLE_HOME /opt/gradle-6.2.1
+ENV PATH $PATH:/opt/gradle-6.2.1/bin
+
 # Update the username and password
 ENV JENKINS_USER admin
 ENV JENKINS_PASS admin
