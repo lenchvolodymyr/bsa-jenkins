@@ -1,4 +1,4 @@
-FROM jenkins/jenkins:lts
+FROM jenkins/jenkins:jdk11
 USER root
 
 # Install sudo
@@ -22,9 +22,6 @@ RUN apt-get update && \
       sudo wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg && \
       echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/php.list
 
-# Add JDK 11
-RUN echo 'deb http://ftp.debian.org/debian stretch-backports main' | sudo tee /etc/apt/sources.list.d/stretch-backports.list
-
 # Install components
 RUN apt-get update && apt-get -y upgrade && apt-get -y dist-upgrade && \
     apt-get -y install git-all \
@@ -34,8 +31,7 @@ RUN apt-get update && apt-get -y upgrade && apt-get -y dist-upgrade && \
       php7.4-json \
       php7.4-xml \
       php7.4-cli \
-      php7.4-mbstring && \
-      apt-get -y -t stretch-backports install openjdk-11-jdk
+      php7.4-mbstring &&
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
