@@ -31,7 +31,7 @@ RUN apt-get update && apt-get -y upgrade && apt-get -y dist-upgrade && \
       php7.4-json \
       php7.4-xml \
       php7.4-cli \
-      php7.4-mbstring &&
+      php7.4-mbstring
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
