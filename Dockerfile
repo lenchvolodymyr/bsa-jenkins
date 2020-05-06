@@ -22,12 +22,15 @@ RUN apt-get update && \
       sudo wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg && \
       echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/php.list
 
+# Add JDK 11
+RUN echo 'deb http://ftp.debian.org/debian stretch-backports main' | sudo tee /etc/apt/sources.list.d/stretch-backports.list
+
 # Install components
 RUN apt-get update && apt-get -y upgrade && apt-get -y dist-upgrade && \
     apt-get -y install git-all \
       nodejs \
       dotnet-sdk-3.1 \
-      default-jdk \
+      openjdk-11-jdk \
       php7.4 \
       php7.4-json \
       php7.4-xml \
