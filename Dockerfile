@@ -8,7 +8,7 @@ RUN apt-get update && \
 # Add dotnet SDK
 RUN wget -O- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.asc.gpg && \
       sudo mv microsoft.asc.gpg /etc/apt/trusted.gpg.d/ && \
-      wget https://packages.microsoft.com/config/debian/10/prod.list && \
+      wget https://packages.microsoft.com/config/debian/9/prod.list && \
       sudo mv prod.list /etc/apt/sources.list.d/microsoft-prod.list && \
       sudo chown root:root /etc/apt/trusted.gpg.d/microsoft.asc.gpg && \
       sudo chown root:root /etc/apt/sources.list.d/microsoft-prod.list
@@ -30,12 +30,12 @@ RUN apt-get update && apt-get -y upgrade && apt-get -y dist-upgrade && \
     apt-get -y install git-all \
       nodejs \
       dotnet-sdk-3.1 \
-      openjdk-11-jdk \
       php7.4 \
       php7.4-json \
       php7.4-xml \
       php7.4-cli \
-      php7.4-mbstring
+      php7.4-mbstring && \
+      apt-get -y -t stretch-backports install openjdk-11-jdk
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
