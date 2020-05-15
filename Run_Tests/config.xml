@@ -55,6 +55,27 @@
           <regexpFilter></regexpFilter>
           <defaultValue>ua</defaultValue>
         </org.jenkinsci.plugins.gwt.GenericVariable>
+        <org.jenkinsci.plugins.gwt.GenericVariable>
+          <expressionType>JSONPath</expressionType>
+          <key>folderName</key>
+          <value>$.folderName</value>
+          <regexpFilter></regexpFilter>
+          <defaultValue></defaultValue>
+        </org.jenkinsci.plugins.gwt.GenericVariable>
+        <org.jenkinsci.plugins.gwt.GenericVariable>
+          <expressionType>JSONPath</expressionType>
+          <key>updateMetadataEndpoint</key>
+          <value>$.updateMetadataEndpoint</value>
+          <regexpFilter></regexpFilter>
+          <defaultValue></defaultValue>
+        </org.jenkinsci.plugins.gwt.GenericVariable>
+        <org.jenkinsci.plugins.gwt.GenericVariable>
+          <expressionType>JSONPath</expressionType>
+          <key>onBuildFailedEndpoint</key>
+          <value>$.onBuildFailedEndpoint</value>
+          <regexpFilter></regexpFilter>
+          <defaultValue></defaultValue>
+        </org.jenkinsci.plugins.gwt.GenericVariable>
       </genericVariables>
       <regexpFilterText></regexpFilterText>
       <regexpFilterExpression></regexpFilterExpression>
@@ -69,16 +90,54 @@
   <concurrentBuild>true</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>RANDOM_NAME=$(cat /dev/urandom | tr -dc &apos;a-zA-Z0-9&apos; | fold -w 32 | head -n 1)
-mkdir $RANDOM_NAME &amp;&amp; cd $RANDOM_NAME
+      <command>curl -H &apos;Content-Type: application/json&apos; -X PUT -d &apos;{ &quot;buildNumber&quot;:&apos;&quot;$BUILD_NUMBER&quot;&apos;, &quot;token&quot;:&quot;&apos;&quot;$token&quot;&apos;&quot; }&apos; $updateMetadataEndpoint
+mkdir $folderName &amp;&amp; cd $folderName
 git clone $testRepository tests &amp;&amp; cd tests &amp;&amp; chmod +x ./test.sh
 ./test.sh $userRepository $token $language
 gzip result.json
-curl -X POST $endpoint --data-binary @result.json.gz --header &quot;Content-Type: application/gzip&quot;
-cd $WORKSPACE &amp;&amp; rm -rf $RANDOM_NAME</command>
+ls -lh result.json.gz
+curl -X POST $endpoint --data-binary @result.json.gz --header &quot;Content-Type: application/gzip&quot;</command>
     </hudson.tasks.Shell>
   </builders>
-  <publishers/>
+  <publishers>
+    <org.jenkinsci.plugins.postbuildscript.PostBuildScript plugin="postbuildscript@2.9.1">
+      <config>
+        <scriptFiles/>
+        <groovyScripts/>
+        <buildSteps>
+          <org.jenkinsci.plugins.postbuildscript.model.PostBuildStep>
+            <results>
+              <string>SUCCESS</string>
+              <string>NOT_BUILT</string>
+              <string>ABORTED</string>
+              <string>FAILURE</string>
+              <string>UNSTABLE</string>
+            </results>
+            <role>BOTH</role>
+            <buildSteps>
+              <hudson.tasks.Shell>
+                <command>cd $WORKSPACE &amp;&amp; rm -rf $folderName</command>
+              </hudson.tasks.Shell>
+            </buildSteps>
+          </org.jenkinsci.plugins.postbuildscript.model.PostBuildStep>
+          <org.jenkinsci.plugins.postbuildscript.model.PostBuildStep>
+            <results>
+              <string>NOT_BUILT</string>
+              <string>ABORTED</string>
+              <string>FAILURE</string>
+            </results>
+            <role>BOTH</role>
+            <buildSteps>
+              <hudson.tasks.Shell>
+                <command>curl -H &apos;Content-Type: application/json&apos; -X PUT -d &apos;{ &quot;buildNumber&quot;:&apos;&quot;$BUILD_NUMBER&quot;&apos;, &quot;token&quot;:&quot;&apos;&quot;$token&quot;&apos;&quot; }&apos; $onBuildFailedEndpoint</command>
+              </hudson.tasks.Shell>
+            </buildSteps>
+          </org.jenkinsci.plugins.postbuildscript.model.PostBuildStep>
+        </buildSteps>
+        <markBuildUnstable>false</markBuildUnstable>
+      </config>
+    </org.jenkinsci.plugins.postbuildscript.PostBuildScript>
+  </publishers>
   <buildWrappers>
     <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.19.1">
       <strategy class="hudson.plugins.build_timeout.impl.AbsoluteTimeOutStrategy">
