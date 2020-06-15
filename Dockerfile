@@ -16,8 +16,8 @@ RUN apt-get update && \
       sudo wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg && \
       echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/php.list && \
       # Add Gradle
-      wget -q https://services.gradle.org/distributions/gradle-6.2.1-bin.zip \
-      && unzip gradle-6.2.1-bin.zip -d /opt && rm gradle-6.2.1-bin.zip && \
+      wget -q https://services.gradle.org/distributions/gradle-6.2.1-bin.zip && \
+      unzip gradle-6.2.1-bin.zip -d /opt && rm gradle-6.2.1-bin.zip && \
       # Install components
       apt-get update && apt-get -y upgrade && apt-get -y dist-upgrade && \
       apt-get -y install git-all \
