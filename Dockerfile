@@ -1,4 +1,9 @@
 FROM jenkins/jenkins:jdk11
+
+LABEL NAME="bsahub/jenkins-autotests"
+LABEL VERSION="1.0"
+LABEL MAINTAINER="Nikita Potapenko @ github.com/potapy4"
+
 USER root
 
 RUN apt-get update && \
