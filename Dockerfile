@@ -1,4 +1,4 @@
-FROM jenkins/jenkins:jdk11
+FROM jenkins/jenkins:lts-jdk11
 
 ARG DOTNET_VERSION="dotnet-sdk-3.1"
 ARG NODEJS_VERSION="setup_12.x"
@@ -6,7 +6,7 @@ ARG GRADLE_VERSION="gradle-6.2.1"
 ARG PHP_VERSION="php7.4"
 
 LABEL NAME="bsahub/jenkins-autotests"
-LABEL VERSION="1.0"
+LABEL VERSION="1.1"
 LABEL MAINTAINER="Nikita Potapenko @ github.com/potapy4"
 
 USER root
@@ -62,11 +62,7 @@ RUN while read i ; \
         done < /usr/share/jenkins/plugins
 
 # Jenkins runs all grovy files from init.groovy.d dir
-# use this for creating default admin user
-COPY default-user.groovy /usr/share/jenkins/ref/init.groovy.d/
-
-# Setup executors
-COPY executors.groovy /usr/share/jenkins/ref/init.groovy.d/
+COPY ["default-user.groovy", "executors.groovy", "/usr/share/jenkins/ref/init.groovy.d/"]
 
 # First time building of jenkins with the preconfigured job
 COPY Run_Tests/config.xml /usr/share/jenkins/ref/jobs/Run_Tests/config.xml
