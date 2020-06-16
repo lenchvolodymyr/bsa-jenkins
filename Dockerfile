@@ -1,5 +1,10 @@
 FROM jenkins/jenkins:jdk11
 
+ARG DOTNET_VERSION="dotnet-sdk-3.1"
+ARG NODEJS_VERSION="setup_12.x"
+ARG GRADLE_VERSION="gradle-6.2.1"
+ARG PHP_VERSION="php7.4"
+
 LABEL NAME="bsahub/jenkins-autotests"
 LABEL VERSION="1.0"
 LABEL MAINTAINER="Nikita Potapenko @ github.com/potapy4"
@@ -16,31 +21,31 @@ RUN apt-get update && \
       sudo chown root:root /etc/apt/trusted.gpg.d/microsoft.asc.gpg && \
       sudo chown root:root /etc/apt/sources.list.d/microsoft-prod.list && \
       # Add nodejs
-      curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash - && \
+      curl -sL https://deb.nodesource.com/$NODEJS_VERSION | sudo -E bash - && \
       # Add PHP
       sudo wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg && \
       echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/php.list && \
       # Add Gradle
-      wget -q https://services.gradle.org/distributions/gradle-6.2.1-bin.zip && \
-      unzip gradle-6.2.1-bin.zip -d /opt && rm gradle-6.2.1-bin.zip && \
+      wget -q https://services.gradle.org/distributions/$GRADLE_VERSION-bin.zip && \
+      unzip $GRADLE_VERSION-bin.zip -d /opt && rm $GRADLE_VERSION-bin.zip && \
       # Install components
       apt-get update && apt-get -y upgrade && apt-get -y dist-upgrade && \
       apt-get -y install git-all \
       nodejs \
-      dotnet-sdk-3.1 \
-      php7.4 \
-      php7.4-json \
-      php7.4-xml \
-      php7.4-cli \
-      php7.4-mbstring && \
+      $DOTNET_VERSION \
+      $PHP_VERSION \
+      $PHP_VERSION-json \
+      $PHP_VERSION-xml \
+      $PHP_VERSION-cli \
+      $PHP_VERSION-mbstring && \
       # Install Composer
       curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
       # Clean up
       sudo apt-get -y autoremove && sudo apt-get -y clean
 
 # Set Gradle in the environment variables
-ENV GRADLE_HOME /opt/gradle-6.2.1
-ENV PATH $PATH:/opt/gradle-6.2.1/bin
+ENV GRADLE_HOME /opt/$GRADLE_VERSION
+ENV PATH $PATH:/opt/$GRADLE_VERSION/bin
 
 # Update the username and password
 ENV JENKINS_USER admin
