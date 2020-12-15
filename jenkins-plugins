@@ -12,6 +12,5 @@ email-ext
 mailer
 cloudbees-folder
 locale
-generic-webhook-trigger
 build-timeout
 postbuildscript

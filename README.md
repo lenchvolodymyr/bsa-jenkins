@@ -26,3 +26,6 @@ docker container run --name jenkins-docker --rm --detach \
   --volume jenkins-docker-certs:/certs/client:ro \
   --publish 8080:8080 --publish 50000:50000 bsahub/jenkins-autotests:latest
   ```
+
+## Post install steps:
+1. Setup # of executors (default 10) and quiet period (default 5 sec.) - Manage Jenkins -> Configure System

@@ -3,90 +3,72 @@
   <actions/>
   <description></description>
   <keepDependencies>false</keepDependencies>
-  <properties/>
+  <properties>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>userRepository</name>
+          <description></description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>testRepository</name>
+          <description></description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>userHometaskId</name>
+          <description></description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>endpoint</name>
+          <description></description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>token</name>
+          <description></description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>language</name>
+          <description></description>
+          <defaultValue>ua</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>folderName</name>
+          <description></description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>updateMetadataEndpoint</name>
+          <description></description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>onBuildFailedEndpoint</name>
+          <description></description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+  </properties>
   <scm class="hudson.scm.NullSCM"/>
   <canRoam>true</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
-  <triggers>
-    <org.jenkinsci.plugins.gwt.GenericTrigger plugin="generic-webhook-trigger@1.67">
-      <spec></spec>
-      <genericVariables>
-        <org.jenkinsci.plugins.gwt.GenericVariable>
-          <expressionType>JSONPath</expressionType>
-          <key>userRepository</key>
-          <value>$.userRepository</value>
-          <regexpFilter></regexpFilter>
-          <defaultValue></defaultValue>
-        </org.jenkinsci.plugins.gwt.GenericVariable>
-        <org.jenkinsci.plugins.gwt.GenericVariable>
-          <expressionType>JSONPath</expressionType>
-          <key>testRepository</key>
-          <value>$.testRepository</value>
-          <regexpFilter></regexpFilter>
-          <defaultValue></defaultValue>
-        </org.jenkinsci.plugins.gwt.GenericVariable>
-        <org.jenkinsci.plugins.gwt.GenericVariable>
-          <expressionType>JSONPath</expressionType>
-          <key>userHometaskId</key>
-          <value>$.userHometaskId</value>
-          <regexpFilter></regexpFilter>
-          <defaultValue></defaultValue>
-        </org.jenkinsci.plugins.gwt.GenericVariable>
-        <org.jenkinsci.plugins.gwt.GenericVariable>
-          <expressionType>JSONPath</expressionType>
-          <key>endpoint</key>
-          <value>$.endpoint</value>
-          <regexpFilter></regexpFilter>
-          <defaultValue></defaultValue>
-        </org.jenkinsci.plugins.gwt.GenericVariable>
-        <org.jenkinsci.plugins.gwt.GenericVariable>
-          <expressionType>JSONPath</expressionType>
-          <key>token</key>
-          <value>$.token</value>
-          <regexpFilter></regexpFilter>
-          <defaultValue></defaultValue>
-        </org.jenkinsci.plugins.gwt.GenericVariable>
-        <org.jenkinsci.plugins.gwt.GenericVariable>
-          <expressionType>JSONPath</expressionType>
-          <key>language</key>
-          <value>$.language</value>
-          <regexpFilter></regexpFilter>
-          <defaultValue>ua</defaultValue>
-        </org.jenkinsci.plugins.gwt.GenericVariable>
-        <org.jenkinsci.plugins.gwt.GenericVariable>
-          <expressionType>JSONPath</expressionType>
-          <key>folderName</key>
-          <value>$.folderName</value>
-          <regexpFilter></regexpFilter>
-          <defaultValue></defaultValue>
-        </org.jenkinsci.plugins.gwt.GenericVariable>
-        <org.jenkinsci.plugins.gwt.GenericVariable>
-          <expressionType>JSONPath</expressionType>
-          <key>updateMetadataEndpoint</key>
-          <value>$.updateMetadataEndpoint</value>
-          <regexpFilter></regexpFilter>
-          <defaultValue></defaultValue>
-        </org.jenkinsci.plugins.gwt.GenericVariable>
-        <org.jenkinsci.plugins.gwt.GenericVariable>
-          <expressionType>JSONPath</expressionType>
-          <key>onBuildFailedEndpoint</key>
-          <value>$.onBuildFailedEndpoint</value>
-          <regexpFilter></regexpFilter>
-          <defaultValue></defaultValue>
-        </org.jenkinsci.plugins.gwt.GenericVariable>
-      </genericVariables>
-      <regexpFilterText></regexpFilterText>
-      <regexpFilterExpression></regexpFilterExpression>
-      <printPostContent>false</printPostContent>
-      <printContributedVariables>true</printContributedVariables>
-      <causeString>Generic Cause</causeString>
-      <token></token>
-      <silentResponse>false</silentResponse>
-      <overrideQuietPeriod>false</overrideQuietPeriod>
-    </org.jenkinsci.plugins.gwt.GenericTrigger>
-  </triggers>
+  <triggers/>
   <concurrentBuild>true</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
@@ -95,12 +77,12 @@ mkdir $folderName &amp;&amp; cd $folderName
 git clone $testRepository tests &amp;&amp; cd tests &amp;&amp; chmod +x ./test.sh
 ./test.sh $userRepository $token $language
 gzip result.json
-ls -lh result.json.gz
 curl -X POST $endpoint --data-binary @result.json.gz --header &quot;Content-Type: application/gzip&quot;</command>
+      <configuredLocalRules/>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
-    <org.jenkinsci.plugins.postbuildscript.PostBuildScript plugin="postbuildscript@2.9.1">
+    <org.jenkinsci.plugins.postbuildscript.PostBuildScript plugin="postbuildscript@2.11.0">
       <config>
         <scriptFiles/>
         <groovyScripts/>
@@ -114,11 +96,14 @@ curl -X POST $endpoint --data-binary @result.json.gz --header &quot;Content-Type
               <string>UNSTABLE</string>
             </results>
             <role>BOTH</role>
+            <executeOn>BOTH</executeOn>
             <buildSteps>
               <hudson.tasks.Shell>
                 <command>cd $WORKSPACE &amp;&amp; rm -rf $folderName</command>
+                <configuredLocalRules/>
               </hudson.tasks.Shell>
             </buildSteps>
+            <stopOnFailure>false</stopOnFailure>
           </org.jenkinsci.plugins.postbuildscript.model.PostBuildStep>
           <org.jenkinsci.plugins.postbuildscript.model.PostBuildStep>
             <results>
@@ -127,11 +112,14 @@ curl -X POST $endpoint --data-binary @result.json.gz --header &quot;Content-Type
               <string>FAILURE</string>
             </results>
             <role>BOTH</role>
+            <executeOn>BOTH</executeOn>
             <buildSteps>
               <hudson.tasks.Shell>
                 <command>curl -H &apos;Content-Type: application/json&apos; -X PUT -d &apos;{ &quot;buildNumber&quot;:&apos;&quot;$BUILD_NUMBER&quot;&apos;, &quot;token&quot;:&quot;&apos;&quot;$token&quot;&apos;&quot; }&apos; $onBuildFailedEndpoint</command>
+                <configuredLocalRules/>
               </hudson.tasks.Shell>
             </buildSteps>
+            <stopOnFailure>false</stopOnFailure>
           </org.jenkinsci.plugins.postbuildscript.model.PostBuildStep>
         </buildSteps>
         <markBuildUnstable>false</markBuildUnstable>
@@ -139,7 +127,7 @@ curl -X POST $endpoint --data-binary @result.json.gz --header &quot;Content-Type
     </org.jenkinsci.plugins.postbuildscript.PostBuildScript>
   </publishers>
   <buildWrappers>
-    <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.19.1">
+    <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.20">
       <strategy class="hudson.plugins.build_timeout.impl.AbsoluteTimeOutStrategy">
         <timeoutMinutes>10</timeoutMinutes>
       </strategy>

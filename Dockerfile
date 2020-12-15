@@ -6,8 +6,8 @@ ARG GRADLE_VERSION="gradle-6.2.1"
 ARG PHP_VERSION="php7.4"
 
 LABEL NAME="bsahub/jenkins-autotests"
-LABEL VERSION="1.1"
-LABEL MAINTAINER="Nikita Potapenko @ github.com/potapy4"
+LABEL VERSION="2.0"
+LABEL MAINTAINER="Mykyta Potapenko @ github.com/potapy4"
 
 USER root
 
