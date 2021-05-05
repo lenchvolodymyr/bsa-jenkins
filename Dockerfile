@@ -1,6 +1,6 @@
 FROM jenkins/jenkins:lts-jdk11
 
-ARG DOTNET_VERSION="dotnet-sdk-3.1"
+ARG DOTNET_VERSION="dotnet-sdk-5.0"
 ARG NODEJS_VERSION="setup_12.x"
 ARG GRADLE_VERSION="gradle-6.2.1"
 ARG PHP_VERSION="php7.4"
